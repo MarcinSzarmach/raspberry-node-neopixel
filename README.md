@@ -25,10 +25,12 @@ Now we can log in to our Raspberry from our computer or we can type all command 
 Now on our computer, connected to the same network as Raspberry we need to create a ssh connection. Tutorial for other systems: https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/
  
 Open terminal and type 
-“ssh pi@<<your_ip_address>>” 
+
+```“ssh pi@<<your_ip_address>>” ```
 
 in my case its
-“ssh pi@192.168.32.144”
+
+```“ssh pi@192.168.32.144”```
 
 After typed administrator password we should see something like that:
 
@@ -39,28 +41,32 @@ Installation of Node.js
 We will be using version 10.24 of Node.js because library used in project “node-rpi-ws281x-native” has a problems in newer version of Node.js.
 
 In next step we should type:
-“wget https://nodejs.org/dist/latest-v10.x/node-v10.24.1-linux-armv7l.tar.gz”
+
+```“wget https://nodejs.org/dist/latest-v10.x/node-v10.24.1-linux-armv7l.tar.gz”```
 
 now, we downloading a node js to our Raspi, then we need copy our Node.js file to proper folder to: 
 
-“sudo cp -R node-v10.24.1-linux-armv7l/* /usr/local/”
+```“sudo cp -R node-v10.24.1-linux-armv7l/* /usr/local/”```
 
 If everything goes well we can check if Node.js was installed correctly by command:
 scr
-“node -v”
+
+```“node -v”```
 
 We should see version of Node.js:
 
 
 Now let’s download our repo from GitHub. First create folder on Desktop by command: 
-“cd Desktop/ && mkdir app && cd app”
+
+```“cd Desktop/ && mkdir app && cd app”```
 
 and we need to download our repo by:
 
-“git clone https://git.stxnext.pl/marcin.szarmach/raspberry-node-neopixel .”
+```“git clone https://git.stxnext.pl/marcin.szarmach/raspberry-node-neopixel .”```
 
 We need to install dependencies: 
-“sudo npm i”
+
+```“sudo npm i”```
 
 After that our project its ready, now we need to connect WS2812 leds to our raspberry:
 
@@ -78,6 +84,7 @@ https://www.youtube.com/watch?v=xbbQI-sd80Y
 
 Let’s open app.js file, we have there:
 
+```
 const gpio = 18
 
 const channels = ws2821x.init({
@@ -87,9 +94,10 @@ const channels = ws2821x.init({
         { count: 62, gpio, invert: false, brightness: 100, stripType: 'ws2812' },
     ]
 });
-
+```
 gpio is a pin number connected to the Raspberry.
 
+```
 const channels = ws2821x.init({
     dma: 10,
     freq: 800000,
@@ -97,6 +105,7 @@ const channels = ws2821x.init({
         { count: 62, gpio, invert: false, brightness: 100, stripType: 'ws2812' },
     ]
 });
+```
 
 Here we have a number of our leds on strip. In my case is 62.
 
@@ -107,13 +116,13 @@ In some case when Your leds is connected properly but doesn't light proper color
 sudo nano /boot/config.txt
 
 and found line:
-
+```
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=on
-
+```
 and you should comment dtparam so it needs to look like that:
-
+```
 # Enable audio (loads snd_bcm2835)
 # dtparam=audio=on
-
+```
 then save the file and reboot Your Raspberry. Now leds strip should work.
